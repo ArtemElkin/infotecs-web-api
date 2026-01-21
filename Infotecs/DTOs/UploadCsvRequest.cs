@@ -1,4 +1,4 @@
-namespace Infotex.DTOs;
+namespace Infotecs.DTOs;
 
 public class UploadCsvRequest
 {

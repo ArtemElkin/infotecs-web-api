@@ -1,10 +1,10 @@
+using Infotecs.Data;
+using Infotecs.DTOs;
+using Infotecs.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Infotex.Data;
-using Infotex.DTOs;
-using Infotex.Services;
 
-namespace Infotex.Controllers;
+namespace Infotecs.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

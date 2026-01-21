@@ -1,7 +1,7 @@
+using Infotecs.Models;
 using Microsoft.EntityFrameworkCore;
-using Infotex.Models;
 
-namespace Infotex.Data;
+namespace Infotecs.Data;
 
 public class ApplicationDbContext : DbContext
 {

@@ -1,10 +1,10 @@
 using System.Globalization;
 using System.Text;
-using Infotex.Data;
-using Infotex.Models;
+using Infotecs.Data;
+using Infotecs.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infotex.Services;
+namespace Infotecs.Services;
 
 public class CsvProcessingService
 {
@@ -23,7 +23,6 @@ public class CsvProcessingService
         using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            // Удаляем существующие записи с таким именем файла
             var existingResult = await _context.Results
                 .FirstOrDefaultAsync(r => r.FileName == fileName, cancellationToken);
             
@@ -32,17 +31,13 @@ public class CsvProcessingService
                 _context.Results.Remove(existingResult);
                 await _context.SaveChangesAsync(cancellationToken);
             }
-
-            // Парсим CSV
+            
             var values = await ParseCsvAsync(fileStream, fileName, cancellationToken);
-
-            // Валидация
+            
             ValidateValues(values);
-
-            // Вычисляем интегральные результаты
+            
             var result = CalculateResults(values, fileName);
-
-            // Сохраняем в БД
+            
             await _context.Results.AddAsync(result, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
@@ -68,7 +63,6 @@ public class CsvProcessingService
         var values = new List<Value>();
         using var reader = new StreamReader(stream, Encoding.UTF8);
         
-        // Пропускаем заголовок
         var headerLine = await reader.ReadLineAsync();
         if (headerLine == null)
         {
@@ -91,43 +85,27 @@ public class CsvProcessingService
             {
                 throw new ArgumentException($"Строка {lineNumber}: неверное количество полей. Ожидается 3 поля, получено {parts.Length}");
             }
-
-            // Парсим дату (формат: ГГГГ-ММ-ДДTчч-мм-сс.ммммZ или стандартный ISO)
+            
             var dateString = parts[0].Trim();
             DateTime date;
             
-            // Пробуем формат из задания (с дефисами)
-            if (DateTime.TryParseExact(dateString, "yyyy-MM-ddTHH-mm-ss.ffffZ", 
+            if (!DateTime.TryParseExact(dateString, "yyyy-MM-ddTHH-mm-ss.ffffZ", 
                     CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, 
-                    out date))
-            {
-                // Успешно распарсили
-            }
-            // Пробуем стандартный ISO формат (с двоеточиями)
-            else if (DateTime.TryParseExact(dateString, "yyyy-MM-ddTHH:mm:ss.ffffZ", 
+                    out date) &&
+                !DateTime.TryParseExact(dateString, "yyyy-MM-ddTHH:mm:ss.ffffZ", 
                     CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, 
-                    out date))
-            {
-                // Успешно распарсили
-            }
-            // Пробуем общий парсинг ISO 8601
-            else if (DateTime.TryParse(dateString, CultureInfo.InvariantCulture, 
+                    out date) &&
+                !DateTime.TryParse(dateString, CultureInfo.InvariantCulture, 
                     DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out date))
-            {
-                // Успешно распарсили
-            }
-            else
             {
                 throw new ArgumentException($"Строка {lineNumber}: неверный формат даты '{dateString}'. Ожидается формат: yyyy-MM-ddTHH-mm-ss.ffffZ или yyyy-MM-ddTHH:mm:ss.ffffZ");
             }
-
-            // Парсим время выполнения
+            
             if (!double.TryParse(parts[1].Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out var executionTime))
             {
                 throw new ArgumentException($"Строка {lineNumber}: неверный формат времени выполнения '{parts[1]}'");
             }
-
-            // Парсим значение показателя
+            
             if (!double.TryParse(parts[2].Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out var valueAmount))
             {
                 throw new ArgumentException($"Строка {lineNumber}: неверный формат значения показателя '{parts[2]}'");
@@ -196,7 +174,6 @@ public class CsvProcessingService
         var avgExecutionTime = executionTimes.Average();
         var avgValue = valueAmounts.Average();
         
-        // Вычисление медианы
         double medianValue;
         if (valueAmounts.Count % 2 == 0)
         {

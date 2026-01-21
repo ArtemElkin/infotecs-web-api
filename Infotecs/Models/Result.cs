@@ -1,6 +1,6 @@
-namespace Infotex.DTOs;
+namespace Infotecs.Models;
 
-public class ResultDto
+public class Result
 {
     public int Id { get; set; }
     public string FileName { get; set; } = string.Empty;
@@ -11,6 +11,8 @@ public class ResultDto
     public double MedianValue { get; set; }
     public double MaxValue { get; set; }
     public double MinValue { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    
+    public ICollection<Value> Values { get; set; } = new List<Value>();
 }
 

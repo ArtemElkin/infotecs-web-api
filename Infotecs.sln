@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infotex", "Infotex\Infotex.csproj", "{E549F004-CD80-4D31-AA8B-286CAF839D6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infotecs", "Infotecs\Infotecs.csproj", "{E549F004-CD80-4D31-AA8B-286CAF839D6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
