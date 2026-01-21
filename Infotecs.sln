@@ -1,6 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infotecs", "Infotecs\Infotecs.csproj", "{E549F004-CD80-4D31-AA8B-286CAF839D6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infotecs.Tests", "Infotecs.Tests\Infotecs.Tests.csproj", "{6D2843E2-EB8D-429D-ACD0-EEB961299477}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +15,9 @@ Global
 		{E549F004-CD80-4D31-AA8B-286CAF839D6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E549F004-CD80-4D31-AA8B-286CAF839D6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E549F004-CD80-4D31-AA8B-286CAF839D6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D2843E2-EB8D-429D-ACD0-EEB961299477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D2843E2-EB8D-429D-ACD0-EEB961299477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D2843E2-EB8D-429D-ACD0-EEB961299477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D2843E2-EB8D-429D-ACD0-EEB961299477}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

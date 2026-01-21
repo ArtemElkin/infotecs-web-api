@@ -77,6 +77,15 @@ Query параметры (все опциональны):
 
 Пример: `2024-01-15T10-30-45.1234Z`
 
+## Запуск тестов
+
+```bash
+cd Infotecs.Tests
+dotnet test
+```
+
+Тесты покрывают основную бизнес-логику: парсинг CSV, валидацию данных, вычисление статистики.
+
 ## Структура проекта
 
 ```
@@ -87,4 +96,7 @@ Infotecs/
 ├── DTOs/            # Data Transfer Objects
 ├── Data/            # DbContext
 └── Migrations/      # Миграции БД
+
+Infotecs.Tests/
+└── Services/        # Unit тесты
 ```
